@@ -1,0 +1,78 @@
+/* Pulled the style="" out of the header and footer classes and placed here*/
+.navbar {
+    background-color: #8adae2;
+    opacity: 0.9;
+    border-bottom: 1px solid #48c3ce;
+    border-top: 1px solid #48c3ce;
+    box-shadow: 0 1px 15px 1px #ccc;
+}
+
+body {
+    background-color: #EEFDFE;
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+footer {
+    background-color: #8adae2;
+
+}
+
+.footer {
+    width: 100%;
+    background-color: #8adae2;
+    text-align: center;
+}
+
+.card-header {
+    background-color: #48c3ce !important;
+    color: white;
+    font-weight: bold;
+}
+
+.card a {
+    background-color: #48c3ce !important;
+    color: white;
+    text-transform: uppercase;
+    font-size: 0.95em;
+}
+
+.card a:hover {
+    background-color: #8adae2 !important;
+}
+
+/*add class="required" to label where form field is required to appear*/
+.required:after {
+    content:"*";
+    color:red;
+}
+
+/* Universal container background, can remove style tag in html for container */
+.container {
+    background-color: #f4f4f4;
+    margin-top: 50px;
+    padding: 40px;
+    border: 1px solid lightgray;
+    box-shadow: 0 1px 15px 1px #ccc;
+}
+
+/* We may want to use btn-primary which has a border that needs styled,
+ * replace/use .btn or if we choose use .btn-primary
+ */
+.btn {
+    background-color: #48c3ce !important;
+    color: white;
+    text-transform: uppercase;
+    font-size: 0.95em;
+}
+
+.btn:hover {
+    background-color: #8adae2 !important;
+    color: black;
+}
+
+
+button {
+    color: black;
+}
+
+

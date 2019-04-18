@@ -1,0 +1,14 @@
+.btn-secondary {
+    background-color: #8adae2 !important;
+    color: black;
+    letter-spacing: 0.1em;
+}
+
+.btn-secondary:hover {
+    background-color: #48c3ce !important;
+}
+
+.color {
+    color: #8adae2;
+    display: inline;
+}

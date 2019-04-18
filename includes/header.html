@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="general_styles.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
+    <link rel="icon" href="includes/favicon.png">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!--<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>-->
+
+    <title><?php echo $page_title; ?></title>
+</head>
+<body>
+
+<nav class="navbar sticky-top navbar-expand-sm navbar-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-toggle"
+            aria-controls="navbar-toggle" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbar-toggle">
+        <a class="navbar-brand" href="index.php">
+            <img src="images/home.svg" width="40" height="40" alt="home" class="ml-lg-3 ml-sm-1 mt-sm-2 my-1">
+        </a>
+
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0 ml-lg-3 ml-sm-1">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbar-dropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <?php echo '' . $_SESSION['name'] . '\'s ' ?> Profile
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbar-dropdown">
+                    <a class="dropdown-item" href="profile.php"><?php echo '' . $_SESSION['name'] . '\'s ' ?> Profile</a>
+                    <!--<a class="dropdown-item" href="#">Settings</a>-->
+                    <a class="dropdown-item" href="logout.php">Logout</a>
+                </div>
+            </li>
+            <?php
+                if($_SESSION['type'] == 'Teacher') {
+                    echo '
+                    <li class="nav-item">
+                        <a class="nav-link" href="search-results.php">Speaker Directory</a>
+                    </li>';
+                } else if($_SESSION['type'] == 'Pro') {
+                    echo '<li class="nav-item">
+                        <a class="nav-link" href="search-results.php">Opportunity Directory</a>
+                    </li>';
+                }
+            ?>
+        </ul>
+
+        <form action="search-results.php" method="get" class="form-inline my-2 my-lg-0" >
+            <?php if($_SESSION['type'] == 'Pro') {echo '<input class="form-control" type="text" placeholder="Search for opportunities.." aria-label="Search" name="search">';}
+                  elseif($_SESSION['type'] == 'Teacher') { echo '<input class="form-control" type="text" placeholder="Search for speakers.." aria-label="Search" name="search">';}?>
+            
+            <!--<input class="form-control" type="text" placeholder="Search.." aria-label="Search" name="search">-->
+            <button class="btn btn-secondary my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
+        </form>
+    </div>
+</nav>
+<!----header-->
