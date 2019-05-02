@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="60b7a78c-111e-4b60-8170-8065c2efddbc" name="Smaller3" url="http://smallerthree.greenriverdev.com">
+        <fileTransfer host="smallerthree.greenriverdev.com" port="18765" rootFolder="/home2/smallert/public_html" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="18765" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

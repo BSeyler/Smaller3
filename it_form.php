@@ -17,7 +17,9 @@ include('includes/header_no_dropdown.html');
 // Form Submission
 if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 
-    require('db/mysqli_connect-wtia.php'); //connect to db
+    require('db/model.php'); //connect to db
+
+    $dbc = getDBC();
 
     $errors = []; // error array
 

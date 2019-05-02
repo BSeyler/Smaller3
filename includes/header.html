@@ -19,7 +19,7 @@
 
     <!--<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>-->
 
-    <title><?php echo $page_title; ?></title>
+    <title>{{@title}}</title>
 </head>
 <body>
 
@@ -30,7 +30,7 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbar-toggle">
-        <a class="navbar-brand" href="index.php">
+        <a class="navbar-brand" href="../">
             <img src="images/home.svg" width="40" height="40" alt="home" class="ml-lg-3 ml-sm-1 mt-sm-2 my-1">
         </a>
 
@@ -38,32 +38,39 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbar-dropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
-                    <?php echo '' . $_SESSION['name'] . '\'s ' ?> Profile
+                    {{@name}}'s Profile
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbar-dropdown">
-                    <a class="dropdown-item" href="profile.php"><?php echo '' . $_SESSION['name'] . '\'s ' ?> Profile</a>
+                    <a class="dropdown-item" href="../Profile">{{@name}}'s Profile</a>
                     <!--<a class="dropdown-item" href="#">Settings</a>-->
-                    <a class="dropdown-item" href="logout.php">Logout</a>
+                    <a class="dropdown-item" href="../logout">Logout</a>
                 </div>
             </li>
             <?php
                 if($_SESSION['type'] == 'Teacher') {
                     echo '
                     <li class="nav-item">
-                        <a class="nav-link" href="search-results.php">Speaker Directory</a>
+                        <a class="nav-link" href="../Speakers">Speaker Directory</a>
                     </li>';
                 } else if($_SESSION['type'] == 'Pro') {
                     echo '<li class="nav-item">
-                        <a class="nav-link" href="search-results.php">Opportunity Directory</a>
+                        <a class="nav-link" href="../Search">Opportunity Directory</a>
                     </li>';
                 }
             ?>
         </ul>
 
         <form action="search-results.php" method="get" class="form-inline my-2 my-lg-0" >
-            <?php if($_SESSION['type'] == 'Pro') {echo '<input class="form-control" type="text" placeholder="Search for opportunities.." aria-label="Search" name="search">';}
-                  elseif($_SESSION['type'] == 'Teacher') { echo '<input class="form-control" type="text" placeholder="Search for speakers.." aria-label="Search" name="search">';}?>
-            
+            <check if="{{@type=='Teacher'}}">
+                <true>
+                    <input class="form-control" type="text" placeholder="Search for speakers.." aria-label="Search" name="search">
+                </true>
+                <false>
+                    <input class="form-control" type="text" placeholder="Search for opportunities.." aria-label="Search" name="search">
+                </false>
+
+            </check>
+
             <!--<input class="form-control" type="text" placeholder="Search.." aria-label="Search" name="search">-->
             <button class="btn btn-secondary my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
         </form>

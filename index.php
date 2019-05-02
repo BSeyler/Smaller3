@@ -1,5 +1,61 @@
 <?php
+    error_reporting(E_ALL);
 
+    //Load the controller file
+    require 'controllers/controller.php';
+
+
+
+    //load the fat free framework
+    $fatFree = require 'vendor/bcosca/fatfree-core/base.php';
+
+    //Set errors to be reported
+    $fatFree->set('ONERROR', function($fatFree){
+        echo $fatFree->get('ERROR.text');
+    });
+
+    $fatFree->route('GET /', function($fatFree){
+        displayLogin($fatFree);
+    });
+
+    $fatFree->route('POST /', function($fatFree){
+        processLogin($fatFree);
+    });
+
+    $fatFree->route('GET /Speaker_Home', function($fatFree){
+        displaySpeakerHome($fatFree);
+    });
+
+$fatFree->route('GET /logout', function(){
+    processLogout();
+});
+
+    $fatFree->route('GET /Profile', function(){
+        determineProfileType();
+    });
+
+$fatFree->route('GET /Speaker_Profile', function($fatFree){
+    displaySpeakerProfileEdit($fatFree);
+});
+
+$fatFree->route('POST /Speaker_Profile', function(){
+    processSpeakerUpdate();
+});
+
+    $fatFree->route('GET /Register_Speaker', function($fatFree){
+        displayRegisterSpeaker($fatFree);
+    });
+
+    $fatFree->route('POST /Register_Speaker', function(){
+        processSpeakerRegistration();
+    });
+
+    $fatFree->route('GET /Register_Teacher', function($fatFree){
+        displayRegisterTeacher($fatFree);
+    });
+
+    $fatFree->run();
+/*
 require('db/mysqli_connect-wtia.php');
 session_start();
 if(isset($_SESSION['email'])) {
@@ -71,72 +127,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     }
 }
-
+*/
 ?>
-<!doctype html>
-<html lang="en">
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="jason_styles.css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
-    <link rel="icon" href="includes/favicon.png">
-    <title>Login</title>
-</head>
-<body style="background-color: #8adae2;"> 
-    
-<div class="container mx-auto p-3 py-5 border shadow bg-light" style="background-color: #f4f4f4; width: 390px; margin-top: 75px; margin-bottom: 75px;">
-    <h1 class="text-center mb-4">WTIA <p class="color">Connections</p></h1>
-    <p class="text-center">Sign in</p>
-    <form method="post" action="index.php">
-        
-        <div class="row my-2 mx-4">
-            <div class="col">
-                <input type="email" class="form-control" placeholder="Email" name="email">
-            </div>
-        </div>    
-        <div class="row my-3 mx-4">    
-            <div class="col">
-                <input type="password" class="form-control" placeholder="Password" name="password">
-            </div>
-        </div>
-        <div class="row mt-4 text-center">
-            <div class="col">
-            <input class="btn btn-secondary text-uppercase" style="width: 276px; font-size: 0.8em; padding: 9px;" type="submit" value="Login">
-            </div>
-        </div>
-
-            <hr class="mt-5 mb-4">
-
-        <p class="text-center mb-4">Create a New Account</p>
-        <div class="row text-center mx-2">
-            <div class="col">
-                <a class="btn btn-secondary text-uppercase" href="it_form.php" style="width: 100px; font-size: 0.8em; padding: 10px;">Speaker</a>
-            </div>
-            <div class="col">
-                <a class="btn btn-secondary text-uppercase" href="teacher_form.php" style="width: 100px; font-size: 0.8em; padding: 10px;">Teacher</a>
-            </div>
-        </div>
-
-        </div>
-    </form>
-
-</div>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            crossorigin="anonymous"></script>
-
-</body>
-</html>

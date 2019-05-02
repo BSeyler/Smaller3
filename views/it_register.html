@@ -1,0 +1,112 @@
+<div class="container border shadow bg-light">
+    <div class="col-sm-12 text-center pb-5">
+        <h1 class="display-4">Create your Speaker Account</h1>
+    </div>
+    <div class="col-sm-8 offset-md-2 offset-sm-0 justify-content-center">
+        <form class="form-group" action="../Register_Speaker" method="post">
+            <fieldset class="form-group">
+                <div class="form-row col">
+                    <div class="form-group col-md-6">
+                        <label for="first_name" class="required">First name</label>
+                        <input type="text" class="form-control" name="first_name" id="first_name" size="25"
+                               maxlength="25" value="<?php if(isset($_POST['first_name'])) echo $_POST['first_name'] ?>" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="last_name" class="required">Last name</label>
+                        <input type="text" class="form-control" name="last_name" id="last_name" size="25"
+                               maxlength="25" value="<?php if(isset($_POST['last_name'])) echo $_POST['last_name'] ?>" required>
+                    </div>
+                </div>
+                <div class="form-group col">
+                    <label for="email" class="required">Email address</label>
+                    <input type="email" class="form-control" name="email" id="email" size="256" maxlength="256"
+                           value="<?php if(isset($_POST['email'])) echo $_POST['email'] ?>" required>
+                </div>
+                <div class="form-group col">
+                    <label for="password" class="required">Password</label>
+                    <div class="form-row">
+                        <div class="col">
+                            <input type="password" class="form-control" name="password" id="password" size="20" placeholder="Password"
+                                   maxlength="20" value="<?php if(isset($_POST['password'])) echo $_POST['password'] ?>" required>
+                        </div>
+                        <div class="col">
+                            <small id="passwordHelp1" class="form-text text-muted col">At least 10 characters</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col">
+                    <label for="confirm" class="required">Confirm</label>
+                    <div class="form-row">
+                        <div class="col">
+                            <input type="password" class="form-control" name="confirm" id="confirm" size="20"
+                                   maxlength="20" value="" placeholder="Confirm password" required>
+                        </div>
+                        <div class="col">
+                            <small id="passwordHelp2" class="form-text text-muted col">Must match password</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col">
+                    <label for="company_name">Company -OR- Organization name</label>
+                    <input type="text" class="form-control" name="company_name" size="80" maxlength="80"
+                           value="<?php if(isset($_POST['company_name'])) echo $_POST['company_name'] ?>" id="company_name">
+                </div>
+                <div class="form-group col">
+                    <label for="job_title">Job title</label>
+                    <input type="text" class="form-control" name="job_title" id="job_title" size="40" maxlength="40"
+                           value="<?php if(isset($_POST['job_title'])) echo $_POST['job_title'] ?>">
+                </div>
+                <div class="form-group col">
+                    <label for="bio">Short biography about you (third-person)</label>
+                    <textarea class="form-control" name="bio" id="bio" maxlength="560" placeholder="Optional, Limit 560 characters"><?php if(isset($_POST['bio'])) echo $_POST['bio'] ?></textarea>
+                </div>
+                <div class="form-group col">
+                    <label for="expertise" class="required">Area of expertise you are comfortable speaking on</label>
+                    <small id="expertiseHelp" class="form-text text-muted"><em>Enter each area of expertise separated by ", "</em></small>
+                    <input type="text" class="form-control" name="expertise" id="expertise" placeholder="Java, SQL, JavaScript..."
+                           value="<?php if(isset($_POST['expertise'])) echo $_POST['expertise'] ?>" required>
+                </div>
+            </fieldset>
+            <fieldset class="form-group col">
+                <label class="required">Format you feel comfortable presenting</label>
+                <small id="formatHelp" class="form-text text-muted"><em>Check at least one -OR- all that apply</em></small>
+                <div class="form-check text-left">
+                    <input class="form-check-input" type="checkbox" name="formats[]" id="qa" value="Q & A / Interview">
+                    <?php if(isset($_POST['formats'])
+                            && in_array("Q & A / Interview", $_POST['formats'])){echo 'checked';}?>>
+                    <label class="form-check-label" for="qa">Q & A / Interview</label>
+                </div>
+                <div class="form-check text-left">
+                    <input class="form-check-input" type="checkbox" name="formats[]" id="formal" value="Formal Presentation / Lecture">
+                    <?php if(isset($_POST['formats'])
+                            && in_array("Formal Presentation / Lecture", $_POST['formats'])){echo 'checked';}?>>
+                    <label class="form-check-label" for="formal">Formal Presentation / Lecture</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="formats[]" id="panel" value="Panel">
+                    <?php if(isset($_POST['formats'])
+                            && in_array("Panel", $_POST['formats'])){echo 'checked';}?>>
+                    <label class="form-check-label" for="panel">Panel</label>
+                </div>
+                <div class="form-check text-left">
+                    <input class="form-check-input" type="checkbox" name="formats[]" id="workshop" value="Workshop">
+                    <?php if(isset($_POST['formats'])
+                            && in_array("Workshop", $_POST['formats'])){echo 'checked';}?>>
+                    <label class="form-check-label" for="workshop">Workshop</label>
+                </div>
+            </fieldset>
+            <fieldset class="form-group col">
+                <div class="form-check text-left">
+                    <input class="form-check-input" type="checkbox" name="weekly_email" id="weekly_email" value="yes">
+                    <?php if(isset($_POST['formats'])){echo 'checked';}?>>
+                    <label class="form-check-label" for="weekly_email">Receive weekly email updates for speaking opportunity matches?</label>
+                </div>
+            </fieldset>
+            <div class="form-group col mt-5">
+                <div class="col text-center">
+                    <button type="submit" class="btn btn-secondary" value="Submit">Create Account</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
