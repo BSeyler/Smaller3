@@ -4,7 +4,7 @@
         <h1 class="display-4">Create your Teacher Account</h1>
     </div>
     <div class="col-sm-8 offset-md-2 offset-sm-0 justify-content-center">
-        <form class="form-group" action="teacher_form.php" method="post">
+        <form class="form-group" action="../Register_Teacher" method="post">
             <fieldset class="form-group">
                 <div class="form-row col">
                     <div class="form-group col-md-6">
@@ -21,7 +21,7 @@
                 <div class="form-group col">
                     <label for="email" class="required">Email address</label>
                     <input type="email" class="form-control" name="email" id="email" size="256" maxlength="256"
-                           value="<?php if(isset($_POST['email'])) echo $_POST['email'] ?>" required>
+                           value="" required>
                 </div>
                 <div class="form-group col">
                     <label for="password" class="required">Password</label>
@@ -50,7 +50,7 @@
                 <div class="form-group col">
                     <label for="district">District</label>
                     <input type="text" class="form-control" name="district" size="80" maxlength="80"
-                           value="<?php if(isset($_POST['district'])) echo $_POST['district'] ?>" id="district">
+                           value="" id="district">
                 </div>
 
                 <div class="form-row col">
@@ -63,20 +63,13 @@
                         <label for="grade">Grade</label>
                         <select class="custom-select" name="grade" id="grade">
                             <option selected>Select a Grade</option>
-                            <option value="6"<?php if(isset($_POST['grade']) && ($_POST['grade'] == '6'))
-                                echo 'selected="selected"';?>>6th Grade</option>
-                            <option value="7"<?php if(isset($_POST['grade']) && ($_POST['grade'] == '7'))
-                                echo 'selected="selected"';?>>7th Grade</option>
-                            <option value="8"<?php if(isset($_POST['grade']) && ($_POST['grade'] == '8'))
-                                echo 'selected="selected"';?>>8th Grade</option>
-                            <option value="9"<?php if(isset($_POST['grade']) && ($_POST['grade'] == '9'))
-                                echo 'selected="selected"';?>>9th Grade</option>
-                            <option value="10"<?php if(isset($_POST['grade']) && ($_POST['grade'] == '10'))
-                                echo 'selected="selected"';?>>10th Grade</option>
-                            <option value="11"<?php if(isset($_POST['grade']) && ($_POST['grade'] == '11'))
-                                echo 'selected="selected"';?>>11th Grade</option>
-                            <option value="12"<?php if(isset($_POST['grade']) && ($_POST['grade'] == '12'))
-                                echo 'selected="selected"';?>>12th Grade</option>
+                            <option value="6">6th Grade</option>
+                            <option value="7">7th Grade</option>
+                            <option value="8">8th Grade</option>
+                            <option value="9">9th Grade</option>
+                            <option value="10">10th Grade</option>
+                            <option value="11">11th Grade</option>
+                            <option value="12">12th Grade</option>
                         </select>
                     </div>
                 </div>
@@ -94,7 +87,7 @@
 
             <fieldset class="form-group col">
                 <div class="form-check text-left">
-                    <input class="form-check-input" type="checkbox" name="weekly_email" id="weekly_email" value="yes"
+                    <input class="form-check-input" type="checkbox" name="weekly_email" id="weekly_email" value="yes">
                     <?php if(isset($_POST['formats'])){echo 'checked';}?>>
                     <label class="form-check-label" for="weekly_email">Receive weekly email updates for speaker matches?</label>
                 </div>

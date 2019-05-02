@@ -21,7 +21,7 @@
 
             if($user_type == "Teacher") {
                 $_SESSION['type'] = 'Teacher';
-                header('Location: ../Speaker_Home');
+                header('Location: ../Teacher_Home');
                 exit;
             } elseif ($user_type == "Professional") {
                 $_SESSION['type'] = 'Professional';
@@ -74,6 +74,11 @@
         echo Template::instance()->render('includes/header_no_dropdown.html');
         echo Template::instance()->render('views/teacher_register.html');
         echo Template::instance()->render('includes/footer.html');
+    }
+
+    function registerTeacherProfile()
+    {
+        registerTeacher();
     }
 
     function displaySpeakerProfileEdit($fatFree)
@@ -183,6 +188,106 @@
     ';
     }
 
+    function showTeacherOpportunities($fatFree)
+    {
+        $fatFree->set('pageTitle', "Register A Teacher Account");
+        $fatFree->set('name', $_SESSION['name']);
+        $fatFree->set('type', $_SESSION['type']);
+
+        //Render the registration page
+        echo Template::instance()->render('includes/header.html');
+
+        renderTeacherOpportunities();
+
+        echo Template::instance()->render('includes/footer.html');
+    }
+
+    function displayAddEvent($fatFree)
+    {
+        $fatFree->set('pageTitle', "Register A Teacher Account");
+        $fatFree->set('name', $_SESSION['name']);
+        $fatFree->set('type', $_SESSION['type']);
+
+        //Render the registration page
+        echo Template::instance()->render('includes/header.html');
+        echo Template::instance()->render('views/add_event.html');
+        echo Template::instance()->render('includes/footer.html');
+    }
+
+    function addEvent()
+    {
+        addNewEvent();
+    }
+
+    function displayEventSuccess($fatFree)
+    {
+        $fatFree->set('pageTitle', "Register A Teacher Account");
+        $fatFree->set('name', $_SESSION['name']);
+        $fatFree->set('type', $_SESSION['type']);
+
+        //Render the registration page
+        echo Template::instance()->render('includes/header.html');
+        echo Template::instance()->render('views/opportunity_created.html');
+        echo Template::instance()->render('includes/footer.html');
+    }
+
+    function renderTeacherOpportunities()
+    {
+        $teacher_info = getTeacherInfo();
+        $opportunities = $teacher_info[1];
+        $num = mysqli_num_rows($opportunities);
+
+        echo '<div class="container border shadow p-5 mt-5 bg-light">';
+        echo '<h1 class="display-4 mb-5 text-center">My Active Speaking Opportunities</h1>';
+        echo '<div class="text-center"><a href="../AddEvent"<button class="btn btn-secondary">Add Opportunity</button></a></div>';
+
+
+        if($num > 0) {
+
+            while($row = mysqli_fetch_assoc($opportunities)) {
+                $type = $_SESSION['type'];
+                $requested = $row['requested_on'];
+                $title = $row['title'];
+                $date = $row['dates'];
+                $city = $row['city'];
+                $days = $row['days'];
+                $times = $row['times'];
+                $opp_id = $row['opp_id'];
+
+                # $name
+                $desc = $row['description'];
+                if($row['qa_interview'] == 1) {
+                    $type .= "QA / Interview, ";
+                } if($row['lecture'] == 1) {
+                    $type .= "Lecture, ";
+                } if($row['panel'] == 1) {
+                    $type .= "Panel, ";
+                } if($row['workshop'] == 1) {
+                    $type .= "Workshop, ";
+                }
+
+                $type = substr($type, 0, -2); //remove last comma
+
+                echo '<div class="card my-5">
+            <h5 class="card-header">' . $title . '</h5>
+             <div class="card-body">
+                <h5 class="card-title"><strong>Date Range: ' . $date . '</h5></strong>
+                <p class="card-text">Days of the Week: '. $days .'<br> Times of Day: '. $times .'<br>
+                Location: '. $city. '<br>Format: ' . $type . '<br>Description: ' . $desc . '
+                </p>
+                <form action="archive_event.php" method="post">
+                    <input type="hidden" name="opp_id" value="' . $opp_id . '">
+                    <button type="submit" class="btn btn-secondary">Archive</button>
+                </form>
+            </div>
+        </div>';
+            }
+        }
+        else {
+            echo '<div class="text-center mt-5" style="margin-bottom: 100px;">No opportunities yet!</div>';
+        }
+    }
+
     function processSpeakerRegistration()
     {
         registerSpeaker();
@@ -218,7 +323,29 @@ function processSpeakerUpdate()
         $fatFree->set('name', $_SESSION['name']);
     }
 
+    function displayTeacherProfileEdit($fatFree)
+    {
+        $userInfo = getTeacherInfo();
+        $fatFree->set('name', $_SESSION['name']);
+        $fatFree->set('type', $_SESSION['type']);
 
+        $fatFree->set('FName', $userInfo[0]['first_name']);
+        $fatFree->set('LName', $userInfo[0]['last_name']);
+        $fatFree->set('Email', $_SESSION['email']);
+        $fatFree->set('bio', $userInfo[0]['bio']);
+        $fatFree->set('school', $userInfo[2]['school']);
+        $fatFree->set('district', $userInfo[2]['district']);
+        $fatFree->set('grade', $userInfo[2]['grade']);
+        $fatFree->set('subject', $userInfo[2]['subject']);
+        echo Template::instance()->render('includes/header.html');
+        echo Template::instance()->render('views/teacher_profile.html');
+        echo Template::instance()->render('includes/footer.html');
+    }
+
+    function processTeacherUpdate()
+    {
+        updateTeacherProfile();
+    }
 
 
     ?>

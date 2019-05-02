@@ -1,0 +1,158 @@
+<!--Start of html - IT professional create account form-->
+<div class="container shadow border bg-light">
+    <div class="col-sm-8 offset-md-2 offset-sm-0 justify-content-center">
+        <div class="col-sm-12 text-center pb-4">
+            <h1 class="display-4"><?php echo $user_info['first_name'] . "'s" . ' Profile'?></h1>
+        </div>
+        <form class="form-group" action="../Teacher_Profile" method="post">
+            <fieldset class="form-group">
+                <div class="form-row col">
+                    <div class="form-group col-md-6">
+                        <label for="first_name">First name</label>
+                        <input type="text" class="form-control" name="first_name" id="first_name" size="25"
+                               maxlength="25" value="{{@FName}}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="last_name">Last name</label>
+                        <input type="text" class="form-control" name="last_name" id="last_name" size="25"
+                               maxlength="25" value="{{LName}}">
+                    </div>
+                </div>
+                <div class="form-group col">
+                    <label for="email">Email address</label>
+                    <input type="email" class="form-control" name="email" id="email" size="256" maxlength="256"
+                           value="{{@Email}}">
+                </div>
+                <div class="form-group col">
+                    <label for="password">Password</label>
+                    <div class="form-row">
+                        <div class="col">
+                            <input type="password" class="form-control" name="password" id="password" size="20"
+                                   maxlength="20" value="" placeholder="password" >
+                        </div>
+                        <div class="col">
+                            <small id="passwordHelp" class="form-text text-muted col">At least 10 characters</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col">
+                    <label for="confirm">Confirm</label>
+                    <div class="form-row">
+                        <div class="col">
+                            <input type="password" class="form-control" name="confirm" id="confirm" size="20"
+                                   maxlength="20" value="" placeholder="confirm password" >
+                        </div>
+                        <div class="col">
+                            <small id="passwordHelp" class="form-text text-muted col">Must match password</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col">
+                    <label for="district">District</label>
+                    <input type="text" class="form-control" name="district" size="80" maxlength="80"
+                           value="{{@district}}" id="district">
+                </div>
+
+                <div class="form-row col">
+                    <div class="form-group col-6">
+                        <label for="school">School</label>
+                        <input type="text" class="form-control" name="school" id="school" size="40" maxlength="40"
+                               value="{{@school}}">
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="grade">Grade</label>
+                        <select class="custom-select" name="grade" id="grade">
+                            <check if="{{@grade==0}}">
+                                <true>
+                                    <option selected>Select a Grade</option>
+                                </true>
+                                <false>
+                                    <option>Select a Grade</option>
+                                </false>
+                            </check>
+                            <check if="{{@grade==6}}">
+                                <true>
+                                    <option value="6" selected>6th Grade</option>
+                                </true>
+                                <false>
+                                    <option value="6">6th Grade</option>
+                                </false>
+                            </check>
+                            <check if="{{@grade==7}}">
+                                <true>
+                                    <option value="7" selected>6th Grade</option>
+                                </true>
+                                <false>
+                                    <option value="7">7th Grade</option>
+                                </false>
+                            </check>
+                            <check if="{{@grade==8}}">
+                                <true>
+                                    <option value="8" selected>8th Grade</option>
+                                </true>
+                                <false>
+                                    <option value="8">8th Grade</option>
+                                </false>
+                            </check>
+                            <check if="{{@grade==9}}">
+                                <true>
+                                    <option value="9" selected>9th Grade</option>
+                                </true>
+                                <false>
+                                    <option value="9">9th Grade</option>
+                                </false>
+                            </check>
+                            <check if="{{@grade==10}}">
+                                <true>
+                                    <option value="10" selected>10th Grade</option>
+                                </true>
+                                <false>
+                                    <option value="10">10th Grade</option>
+                                </false>
+                            </check>
+                            <check if="{{@grade==11}}">
+                                <true>
+                                    <option value="11" selected>11th Grade</option>
+                                </true>
+                                <false>
+                                    <option value="11">11th Grade</option>
+                                </false>
+                            </check>
+                            <check if="{{@grade==12}}">
+                                <true>
+                                    <option value="12" selected>12th Grade</option>
+                                </true>
+                                <false>
+                                    <option value="12">12th Grade</option>
+                                </false>
+                            </check>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group col">
+                    <label for="bio">Short biography about you (third-person)</label>
+                    <textarea class="form-control" name="bio" id="bio" maxlength="560"
+                              placeholder="Optional, Limit 560 characters">{{@bio}}</textarea>
+                </div>
+                <div class="form-group col">
+                    <label for="subject">Subject</label>
+                    <input type="text" class="form-control" name="subject" id="subject"
+                           value="{{@subject}}">
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group col">
+                <div class="form-check text-left">
+                    <input class="form-check-input" type="checkbox" name="weekly_email" id="weekly_email" value="yes">
+                    <label class="form-check-label" for="weekly_email">Receive weekly email updates for Speaking Opportunity matches? </label>
+                </div>
+            </fieldset>
+            <div class="form-group col">
+                <div class="col text-center mt-5">
+                    <button type="submit" class="btn btn-secondary" value="Submit">Update Account</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

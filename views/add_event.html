@@ -1,0 +1,118 @@
+<div class="container mb-4 shadow border bg-light">
+    <div class="col-sm-8 offset-md-2 offset-sm-0 justify-content-center">
+
+        <h1 class="text-center mb-5 display-4">Add an Opportunity</h1>
+
+        <form action="../AddEvent" class="form-group" method="post">
+            <div class="form-group">
+                <div class="form-group col">
+
+                    <label for="title" class="required">Opportunity Title</label>
+                    <input type="text" class="form-control" name="title" id="title" placeholder="Include a short unique name..."
+                           value="<?php if (isset($_POST['title'])) echo $_POST['title']; ?>"  required>
+                </div>
+                <div class="form-group col">
+
+                    <label for="location" class="required">Opportunity Location</label>
+                    <input type="text" class="form-control" name="address" id="location" placeholder="Venue Address"
+                           value="<?php if (isset($_POST['address'])) echo $_POST['address']; ?>"  required>
+                </div>
+            </div>
+            <div class="form-row col">
+                <div class="form-group col-md-6">
+                    <label for="city" class="required">City</label>
+                    <input type="text" class="form-control" name="city" placeholder="City"
+                           value="<?php if (isset($_POST['city'])) echo $_POST['city']; ?>" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="zip" class="required">Zip Code</label>
+                    <input type="text" class="form-control" name="zip" placeholder="Zip"
+                           value="<?php if (isset($_POST['zip'])) echo $_POST['zip']; ?>" required>
+                </div>
+            </div>
+            <div class="form-group col">
+                <label for="reportRange" class="required">Date Range</label>
+                <input name="reportRange" id="reportRange" style="background: #fff; cursor: pointer; padding: 5px 10px;
+            border-radius: 4px; border: 1px solid #ccc; width: 100%"><small>*Opportunities get archived after end date has passed</small>
+            </div>
+
+            <div class="form-group col">
+                <label for="weekDays" class="required">Days of the Week</label>
+                <div class="weekDays-selector" id="weekDays">
+                    <input type="checkbox" id="weekday-sun" class="weekday" name="days[]" value="Sun" <?php if (!empty($_POST['days'])
+                    && in_array("Sun", $_POST['days'])) echo 'checked'; ?>/>
+                    <label for="weekday-sun">Sun</label>
+                    <input type="checkbox" id="weekday-mon" class="weekday" name="days[]" value="Mon" <?php if (!empty($_POST['days'])
+                    && in_array("Mon", $_POST['days'])) echo 'checked'; ?>/>
+                    <label for="weekday-mon">Mon</label>
+                    <input type="checkbox" id="weekday-tue" class="weekday" name="days[]" value="Tue" <?php if (!empty($_POST['days'])
+                    && in_array("Tue", $_POST['days'])) echo 'checked'; ?>/>
+                    <label for="weekday-tue">Tue</label>
+                    <input type="checkbox" id="weekday-wed" class="weekday" name="days[]" value="Wed" <?php if (!empty($_POST['days'])
+                    && in_array("Wed", $_POST['days'])) echo 'checked'; ?>/>
+                    <label for="weekday-wed">Wed</label>
+                    <input type="checkbox" id="weekday-thu" class="weekday" name="days[]" value="Thu" <?php if (!empty($_POST['days'])
+                    && in_array("Thu", $_POST['days'])) echo 'checked'; ?>/>
+                    <label for="weekday-thu">Thu</label>
+                    <input type="checkbox" id="weekday-fri" class="weekday" name="days[]" value="Fri"/>
+                    <label for="weekday-fri">Fri</label>
+                    <input type="checkbox" id="weekday-sat" class="weekday" name="days[]" value="Sat"/>
+                    <label for="weekday-sat">Sat</label>
+                </div>
+            </div>
+
+            <div class="form-group col">
+                <label for="weekdays" class="required">Preferred Time(s) of Day</label>
+                <div class="time" id="weekDays">
+                    <input type="checkbox" id="morning" class="weekday" name="times[]" value="Mornings"/>
+                    <label for="morning">Mornings</label>
+                    <input type="checkbox" id="afternoon" class="weekday" name="times[]" value="Afternoons"/>
+                    <label for="afternoon">Afternoons</label>
+                    <input type="checkbox" id="evening" class="weekday" name="times[]" value="Evenings"/>
+                    <label for="evening">Evenings</label>
+                </div>
+            </div>
+
+            <div class="form-group col">
+                <label for="description" class="required">Opportunity Description</label>
+                <textarea class="form-control" id="description" aria-label="With textarea" name="description" rows="6"><?php if (isset($_POST['description'])) echo $_POST['description']; ?></textarea>
+            </div>
+
+            <div class="form-group col">
+                <label for="format[]" class="required">Format of Opportunity</label>
+                <small id="formatHelp" class="form-text text-muted"><em>Check at least one -OR- all that apply</em></small>
+
+                <div class="form-check" id="format">
+                    <input class="form-check-input" type="checkbox" id="QA" value="QA" name="format[]">
+                    <label class="form-check-label" for="QA">
+                        Q & A / Interview
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="Formal" name="format[]" value="Formal">
+                    <label class="form-check-label" for="Formal">
+                        Formal Presentation / Lecture
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="Panel" name="format[]" value="Panel">
+                    <label class="form-check-label" for="Panel">
+                        Panel
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="Workshop" name="format[]" value="Workshop">
+                    <label class="form-check-label" for="Workshop">
+                        Workshop
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group col">
+                <p style="margin-top: 50px; text-align: center">
+                    <input class="btn btn-secondary text-center" type="submit" value="Add Opportunity">
+                </p>
+            </div>
+        </form>
+    </div>
+</div>
