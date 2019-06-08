@@ -1,4 +1,10 @@
-/* Pulled the style="" out of the header and footer classes and placed here*/
+/**
+ * Bradley Seyler, Aaron Reynolds, Christian Talmadge
+ * 6/7/2019
+ * general_styles.css
+ *
+ * This file contains general css rules
+ */
 .navbar {
     background-color: #8adae2;
     opacity: 0.9;
@@ -16,7 +22,12 @@ footer {
     background-color: #8adae2;
 
 }
-
+td {
+    padding: 10px;
+    text-align:center;
+    border:1px solid black;
+    padding:5px
+}
 .footer {
     width: 100%;
     background-color: #8adae2;

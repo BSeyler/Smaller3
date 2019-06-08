@@ -1,4 +1,12 @@
 <?php
+/**
+ * Bradley Seyler, Aaron Reynolds, Christian Talmadge
+ * 6/7/2019
+ * archive-event.php
+ *
+ * This file is unconverted from TeamWon's source code. It contains the ability to archive events.
+ */
+
 session_start();
 if(empty($_SESSION['email']) || $_SESSION['type'] == 'Pro') {
     header('Location: index.php');

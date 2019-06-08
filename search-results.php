@@ -1,4 +1,12 @@
     <?php
+    /**
+     * Bradley Seyler, Aaron Reynolds, Christian Talmadge
+     * 6/7/2019
+     * search-results.php
+     *
+     * This file is unconverted from TeamWon's source code. It contains search functions.
+     */
+
      //start session
      session_start();
      

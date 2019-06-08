@@ -1,9 +1,23 @@
 <?php
-    define('DB_USER', 'smallert_phpscript');
-    define('DB_PASSWORD', 'zcy7}]fdeF3D');
-    define('DB_HOST', 'localhost');
-    define('DB_NAME', 'smallert_wtiaconnect');
+    /**
+     * Bradley Seyler, Aaron Reynolds, Christian Talmadge
+     * 6/5/2019
+     * model.php
+     *
+     * This file contains all database related code, such as user
+     * info retrieval and updating user info
+     */
 
+    //Set these according to your database info!
+    define('DB_USER', 'DB USER HERE');
+    define('DB_PASSWORD', 'DB USER PASSWORD HERE');
+    define('DB_HOST', 'localhost');
+    define('DB_NAME', 'DB NAME HERE');
+
+    /**
+     * This function connects to the database
+     * @return mysqli This is the connection to the database
+     */
     function getDBC()
     {
         $dbc = @mysqli_connect (DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
@@ -12,6 +26,11 @@
         return $dbc;
     }
 
+    /**
+     * This function retrieves the corresponding information for
+     * the given teacher
+     * @return array of teacher information
+     */
     function getTeacherInfo()
     {
         $email = $_SESSION['email'];
@@ -27,6 +46,7 @@
         }
 
         $query2 = "SELECT school, district, grade, subject FROM teachers WHERE user_id='$user'";
+
         $result2 = @mysqli_query($dbc, $query2);
         $teacher_info = mysqli_fetch_array($result2, MYSQLI_ASSOC);
 
@@ -41,6 +61,53 @@
         return $returnArray = [$user_row, $opportunities, $teacher_info];
     }
 
+    /**
+     * This function retrieves teacher info with a opportunity, which is used for sending emails
+     * @param $id
+     * @param $opp_id
+     * @return array
+     */
+    function getTeacherInfoRequest($id, $opp_id)
+    {
+        $dbc = getDBC();
+
+        $query = "SELECT first_name, last_name, email
+              FROM users WHERE user_id = '$id'";
+        $user_info = @mysqli_query($dbc, $query);
+
+        $query = "SELECT * FROM opportunity 
+              WHERE opp_id='$opp_id';";
+
+        $opportunity = @mysqli_query($dbc, $query);
+
+        return $returnArray = [$user_info, $opportunity];
+    }
+
+    function getProfessionals()
+    {
+        $dbc = getDBC();
+
+        $query = "SELECT first_name, last_name, bio FROM users WHERE user_type='Professional'";
+        $result1 = @mysqli_query($dbc, $query);
+        $rows = mysqli_num_rows($result1);
+
+        $query = "SELECT company, job_title, expertise FROM pros";
+        $result2 = @mysqli_query($dbc, $query);
+        $rows2 = mysqli_num_rows($result2);
+
+        if($rows2 != $rows) {
+            echo '<p>The number of rows don\'t match</p>';
+            echo "Users: $rows -- Pros: $rows2";
+            return;
+        }
+
+        return $returnArray = [$rows, $result1, $result2];
+    }
+
+    /**
+     * This function grabs form data from the register speaker form and registers
+     * the user when successful
+     */
     function registerSpeaker()
     {
         $dbc = getDBC();
@@ -78,7 +145,7 @@
             }
         }
 
-        //check for password  --extra step to make it secure** not to check Brian's suggestion
+        //check for F  --extra step to make it secure** not to check Brian's suggestion
         if (empty($_POST['password'])) { //|| strlen(trim($_POST['password']) < 10)) {
             $errors[] = 'Please enter a password that is at least 10 characters long.';
         } else if (empty($_POST['confirm'])) {
@@ -169,7 +236,7 @@
 
             // if the query ran ok.
             if ($result) {
-                header('Location ../');
+                header('Location: ../');
             } else { //the form did not run ok
                 echo '<h1>System Error</h1>
                     <p class="error">Your Account was not registered due to a system error. We apologize for any inconvenience.</p>';
@@ -178,11 +245,136 @@
             mysqli_close($dbc); //close the db connection
             exit();
         } else {
-            header('Location ../Register_Speaker');
+            header('Location: ../Register_Speaker');
         }
         mysqli_close($dbc); //close the db
     }
 
+    /**
+     * This function generates a change password email
+     */
+    function changePassword()
+    {
+        //Get connection to the database
+        $dbc = getDBC();
+
+        if(isset($_POST["ForgotPassword"]))
+        {
+            //get submitted e-mail address
+            if(filter_var($_POST["email"], FILTER_VALIDATE_EMAIL))
+            {
+                $email = $_POST["email"];
+            }
+            else
+            {
+                echo "Email is not valid";
+                exit;
+            }
+            $query = "SELECT email, user_id FROM users WHERE email = '".$email."'";
+            $userExists = @mysqli_query($dbc, $query);
+            $rows = mysqli_num_rows($userExists);
+            $userExists = mysqli_fetch_array($userExists, MYSQLI_ASSOC);
+
+           // var_dump($userExists);
+
+            if($rows > 0)
+            {
+                //Create unique salt. This will never leave PHP unencrypted
+                $salt = "498#2D83B631%3800EBD!801600D*7E3CC13";
+
+                //Create unique user pass word reset key
+                $password = hash('sha512', $salt.$userExists["email"]);
+
+                //Create URL which the user will be redirected to in order to reset password
+                $pwurl = "www.smallerthree.greenriverdev.com/Reset_Password?q=".$password . "&&id=" .$userExists["user_id"];
+
+                //Email them their key
+                $mailbody = "Dear user,\n\n
+                If this e-mail does not apply to you please ignore it. 
+                It appears that you have requested a password reset at our website 
+                www.smallerthree.greenriverdev.com\n\n
+                To reset your password, please click the link below. 
+                If you cannot click it, please paste it into your web browser's address bar.\n\n"
+                    . $pwurl . "\n\nThanks,\nWTIA";
+
+                mail($userExists["email"], "www.smallerthree.greenriverdev.com - Password Reset", $mailbody);
+
+                //print success message
+                //echo "Your password reset request has been successful.
+                     // Check your email and your junk/spam folder.";
+                echo "<p class='text-center'> Your password reset request has been succcessful.
+                      Please check your email and your junk/spam folder.</p>";
+            }
+            else
+            {
+                //print error message
+                echo "No user with that email address exists.";
+            }
+
+        }
+        //close db
+        mysqli_close($dbc);
+
+    }
+
+    /**
+     * This function grabs the data from the reset password form and updates the DB
+     */
+    function resetPassword()
+    {
+        $dbc = getDBC();
+
+        if(isset($_POST["ResetPasswordForm"]))
+        {
+            //gather the post data
+            $id = $_POST["id"];
+            $password = $_POST["password"];
+            $confirmpassword = $_POST["confirmpassword"];
+            $hash = $_POST["q"];
+
+            $query = "SELECT email FROM users WHERE user_id=" . $id;
+            $userExists = @mysqli_query($dbc, $query);
+            $userExists = mysqli_fetch_array($userExists, MYSQLI_ASSOC);
+
+            //use same salt from change_password method
+            $salt = "498#2D83B631%3800EBD!801600D*7E3CC13";
+
+            //generate the reset key
+            $resetKey = hash('sha512', $salt.$userExists['email']);
+
+            //Does the new reset key match the old one?
+            if($resetKey == $hash)
+            {
+                if($password == $confirmpassword)
+                {
+                        //hash and secure the password
+                        $password = hash('sha512', $password);
+
+                        //Update users password
+                        $query = "UPDATE users SET password = '" . $password . "' WHERE user_id=".$id;
+                        $userExists = @mysqli_query($dbc, $query);
+
+                        echo "<p class='text-center'>Your password has successfully been reset</p>";
+                        echo "<div style=\"text-align:center\">
+                                <form action=\"http://smallerthree.greenriverdev.com\">
+                                <input type=\"submit\" value=\"Return to Login Page\" />
+                            </div>
+                            </form>";
+
+                }
+                else
+                {
+                    echo "Your password's do not match";
+                }
+            }
+            mysqli_close($dbc);
+        }
+    }
+
+    /**
+     * This function is responsible for registering the users
+     * teacher account into the database
+     */
     function registerTeacher()
     {
         $dbc = getDBC();
@@ -298,7 +490,7 @@
 
             // if the query ran ok.
             if ($result) {
-                header('Location ../');
+                header('Location: ../');
             } else { //the form did not run ok
                 echo '<h1>Error!</h1> <p class="error">The following error(s) occurred:<br>';
                 foreach($errors as $msg) {
@@ -319,6 +511,11 @@
         mysqli_close($dbc); //close the db
     }
 
+    /**
+     * This function tests a users login data
+     * @param $email String this is the email the user entered
+     * @param $password String this is the password the user entered
+     */
     function testLogin($email, $password)
     {
         $dbc = getDBC();
@@ -351,6 +548,11 @@
         }
     }
 
+    /**
+     * This function returns all opportunities in the database
+     * @return bool|mysqli_result The return type will be a boolean data retrieval fails,
+     * or an array of opportunities
+     */
     function getOpportunities()
     {
         $email = $_SESSION['email'];
@@ -399,6 +601,10 @@
         return @mysqli_query($dbc, $query);
     }
 
+    /**
+     * This function returns a speakers info
+     * @return array|string This array contains a speakers info
+     */
     function loadSpeakerInfo()
     {
         $email = $_SESSION['email'];
@@ -426,6 +632,9 @@
         return "error";
     }
 
+    /**
+     * This function updates a speaker's profile
+     */
     function updateSpeakerProfile()
     {
         $fullInfo = loadSpeakerInfo();
@@ -570,7 +779,9 @@
         }
     }
 
-
+    /**
+     * This function adds a new event to the database
+     */
     function addNewEvent()
     {
         $dbc = getDBC();
@@ -692,6 +903,9 @@
         mysqli_close($dbc);
     }
 
+    /**
+     * This function updates a teacher profile
+     */
     function updateTeacherProfile()
     {
         //connect to db
