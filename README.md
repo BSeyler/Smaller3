@@ -103,7 +103,7 @@ Set line 780 to your SMTP server URL, 781 to your SMTP email user, and 782 to th
 If any additional help is needed with deployment, or other issues, we'll glady help. The following is our contact information:
 *Bradley Seyler* - bradleyseyler@gmail.com
 *Aaron Reynolds* - areynolds086@gmail.com
-*Christian Talmadge* -
+*Christian Talmadge* - christiantalmadge@gmail.com
 
 ## Built With
 
